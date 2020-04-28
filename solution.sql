@@ -1,3 +1,4 @@
+USE publications;
 SELECT authors.au_id AS 'AUTHOR ID', authors.au_lname AS 'LAST NAME', 
 authors.au_fname AS 'FIRST NAME', titles.title AS 'TITLE', 
 publishers.pub_name AS 'PUBLISHER'
@@ -36,7 +37,7 @@ SELECT grouped.author_id AS 'AUTHOR ID', grouped.last_name AS 'LAST NAME',
 grouped.first_name AS 'FIRST NAME', SUM(grouped.profit) AS 'PROFIT'
 FROM (SELECT authors.au_id AS author_id, authors.au_lname AS last_name, 
 	 authors.au_fname AS first_name, 
-	 (titles.advance+titles.price*SUM(sales.qty)*titles.royalty/100)*titleauthor.royaltyper/100 
+	 (titles.advance+titles.price*SUM(sales.qty)*(titles.royalty/100))*titleauthor.royaltyper/100 
 	 AS profit
 	 FROM publications.authors
 	 JOIN publications.titleauthor ON authors.au_id=titleauthor.au_id
