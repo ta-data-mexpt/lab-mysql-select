@@ -2,11 +2,11 @@
 #What titles each author has published at which publishers
 SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', titles.title AS 'Title', publishers.pub_name AS 'Publisher'
 FROM authors
-JOIN titleauthor 
+LEFT JOIN titleauthor 
 ON authors.au_id = titleauthor.au_id
-JOIN titles 
+LEFT JOIN titles 
 ON titles.title_id = titleauthor.title_id 
-JOIN publishers 
+INNER JOIN publishers 
 ON publishers.pub_id  = titles.pub_id 
 GROUP BY authors.au_id, titles.title, publishers.pub_name
 ORDER BY authors.au_id;
@@ -15,24 +15,24 @@ ORDER BY authors.au_id;
 # How many titles each author has published at each publisher
 SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', titles.title AS 'Title', publishers.pub_name AS 'Publisher', count(titles.title) as 'Title Count'
 FROM authors
-JOIN titleauthor 
+LEFT JOIN titleauthor 
 ON authors.au_id = titleauthor.au_id 
-JOIN titles 
+inner JOIN titles 
 ON titles.title_id = titleauthor.title_id
-JOIN publishers 
+INNER JOIN publishers 
 ON publishers.pub_id  = titles.pub_id 
-GROUP BY  publishers.pub_name, authors.au_id, titles.title
+GROUP BY 'title count', titles.title, publishers.pub_name, authors.au_id
 ORDER BY authors.au_id DESC;
 
 #Challenge 3
 #Top 3 authors who have sold the highest number of titles
 SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', sum(sales.qty) AS 'Total'
 FROM authors 
-JOIN titleauthor
+LEFT JOIN titleauthor
 ON authors.au_id = titleauthor.au_id
-JOIN titles
+INNER JOIN titles
 ON titles.title_id = titleauthor.title_id 
-JOIN sales 
+lEFT JOIN sales 
 ON titles.title_id = sales.title_id
 GROUP BY authors.au_id
 ORDER BY Total DESC
@@ -42,11 +42,11 @@ LIMIT 3;
 #Best selling 23 authors ranking
 SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', sum(sales.qty) AS 'Total'
 FROM authors 
-JOIN titleauthor
+LEFT JOIN titleauthor
 ON authors.au_id = titleauthor.au_id
-JOIN titles
+INNER JOIN titles
 ON titles.title_id = titleauthor.title_id 
-JOIN sales 
+INNER JOIN sales 
 ON titles.title_id = sales.title_id
 GROUP BY authors.au_id
 ORDER BY Total DESC
@@ -56,9 +56,9 @@ LIMIT 23;
 # 3 Most profiting authors
 SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', SUM(titles.advance + titles.royalty) AS 'Profit'
 FROM authors
-JOIN titleauthor
+LEFT JOIN titleauthor
 ON authors.au_id = titleauthor.au_id
-JOIN titles
+INNER JOIN titles
 ON titles.title_id = titleauthor.title_id 
 GROUP BY authors.au_id
 ORDER BY Profit DESC
