@@ -91,7 +91,7 @@ Bonus Challenge - Most Profiting Authors
 SELECT aut.au_id
 	, aut.au_lname
     , aut.au_fname
-    , ((tit.price * sal.qty * (tit.royalty/100)) + tit.royalty) * (tit_a.royaltyper/100) AS 'Profit'
+    , ((tit.price * sal.qty * (tit.royalty/100)) + tit.advance) * (tit_a.royaltyper/100) AS 'Profit'
 FROM authors AS aut
 LEFT JOIN titleauthor AS tit_a
 	ON aut.au_id = tit_a.au_id
@@ -123,7 +123,7 @@ SELECT aut.au_id
     , tit.royalty
     , tit.price
     , sal.qty
-    , ((tit.price * sal.qty * (tit.royalty/100)) + tit.royalty) * (tit_a.royaltyper/100) AS 'Profit'
+    , ((tit.price * sal.qty * (tit.royalty/100)) + tit.advance) * (tit_a.royaltyper/100) AS 'Profit'
     , (SELECT COUNT(TA.au_id) AS num_authors FROM titles AS T INNER JOIN titleauthor AS TA ON TA.title_id = T.title_id WHERE T.title_id = tit_a.title_id GROUP BY TA.title_id) AS num_authors
 FROM authors AS aut
 INNER JOIN titleauthor AS tit_a
