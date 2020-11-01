@@ -33,7 +33,7 @@ from how_many;
 #Challenge 3: Best Selling Authors
 select AU.au_id,AU.au_lname,AU.au_fname,sum(SA.qty) TOTAL
 from authors AU
-right join titleauthor TA
+left join titleauthor TA
 on AU.au_id=TA.au_id
 left join titles TI
 on TA.title_id=TI.title_id
