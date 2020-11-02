@@ -57,14 +57,17 @@ order by TOTAL DESC;
 
 #Bonus challenge:Most Profiting Authors
 SELECT PROFIT_IND.AU_ID, PROFIt_IND.au_lname, PROFIT_IND.au_fname, SUM(PROFIT_IND.GET_PROFIT) PROFIT
-FROM (select AU.au_id,AU.au_lname,AU.au_fname, ti.title_id,TA.royaltyper,TI.advance,TI.royalty,(TI.advance+(TI.royalty/100)*ti.ytd_sales)*(TA.royaltyper/100) GET_PROFIT
+FROM (select AU.au_id,AU.au_lname,AU.au_fname, ti.title_id,TA.royaltyper,TI.advance,TI.royalty,sa.qty,(TI.advance+(TI.royalty/100)*sa.qty*ti.price)*(TA.royaltyper/100) GET_PROFIT
 from authors AU
 left join titleauthor TA
 ON AU.au_id=TA.au_id
 left join titles TI
 on TA.title_id=TI.title_id
+left join sales SA
+on TI.title_id=SA.title_id
 group by au.au_id
 order by ti.title_id) PROFIT_IND
 group by PROFIT_IND.au_id
-ORDER BY PROFIT DESC
+ORDER BY PROFIT DESC;
 LIMIT 3;
+
