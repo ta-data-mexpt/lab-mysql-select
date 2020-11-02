@@ -7,13 +7,13 @@ ON authors.au_id = titleauthor.au_id
 LEFT JOIN titles 
 ON titles.title_id = titleauthor.title_id 
 INNER JOIN publishers 
-ON publishers.pub_id  = titles.pub_id 
+ON  titles.pub_id = publishers.pub_id 
 GROUP BY authors.au_id, titles.title, publishers.pub_name
 ORDER BY authors.au_id;
 
 #Challenge 2
 # How many titles each author has published at each publisher
-SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', titles.title AS 'Title', publishers.pub_name AS 'Publisher', count(titles.title) as 'Title Count'
+SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au_fname AS 'First Name', titles.title AS 'Title', publishers.pub_name AS 'Publisher', count(titles.title) as 'Title_Count'
 FROM authors
 LEFT JOIN titleauthor 
 ON authors.au_id = titleauthor.au_id 
@@ -21,7 +21,7 @@ inner JOIN titles
 ON titles.title_id = titleauthor.title_id
 INNER JOIN publishers 
 ON publishers.pub_id  = titles.pub_id 
-GROUP BY 'title count', titles.title, publishers.pub_name, authors.au_id
+GROUP BY 'Title_count', titles.title, publishers.pub_name, authors.au_id
 ORDER BY authors.au_id DESC;
 
 #Challenge 3
@@ -30,9 +30,9 @@ SELECT authors.au_id AS 'Author ID', authors.au_lname AS 'Last Name', authors.au
 FROM authors 
 LEFT JOIN titleauthor
 ON authors.au_id = titleauthor.au_id
-INNER JOIN titles
+LEFT JOIN titles
 ON titles.title_id = titleauthor.title_id 
-lEFT JOIN sales 
+JOIN sales 
 ON titles.title_id = sales.title_id
 GROUP BY authors.au_id
 ORDER BY Total DESC
