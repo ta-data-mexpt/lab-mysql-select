@@ -121,16 +121,25 @@ left join
 		a.au_id,
 		a.au_lname,
 		a.au_fname,
-		t.price * t.ytd_sales as entaire_sales,
+		t.price * s.qty as entaire_sales,
 		royalty,
-		(t.price * t.ytd_sales) * (royalty/100) as profit_sales,
+		(t.price * s.qty) * (royalty/100) as profit_sales,
 		t.advance,
-		((t.price * t.ytd_sales) * (royalty/100)) + t.advance as profit
-	from authors a
+		((t.price * s.qty) * (royalty/100)) + t.advance as profit
+	from	
+		(
+			select
+				title_id,
+				sum(qty) as qty
+			from sales
+			group by title_id
+		) as s
 	left join titleauthor ta
-		on a.au_id = ta.au_id
+		on s.title_id = ta.title_id
+	left join authors a
+		on ta.au_id = a.au_id
 	left join titles t
-		on ta.title_id = t.title_id
+		on s.title_id = t.title_id
 	group by    
 		a.au_id,
 		a.au_lname,
