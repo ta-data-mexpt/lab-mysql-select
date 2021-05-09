@@ -346,6 +346,8 @@ UNLOCK TABLES;
 
 -- Dump completed on 2018-08-01 16:44:55
 
+-- Challenge 1 -- 
+
 SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, ti.title as Title, p.pub_name as PUBLISHER
 FROM authors a
 INNER JOIN titleauthor t
