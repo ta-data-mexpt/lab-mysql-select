@@ -346,9 +346,11 @@ UNLOCK TABLES;
 
 -- Dump completed on 2018-08-01 16:44:55
 
-SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, ti.title as Title
+SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, ti.title as Title, p.pub_name as PUBLISHER
 FROM authors a
 INNER JOIN titleauthor t
 ON a.au_id = t.au_id
 INNER JOIN titles ti
-ON t.title_id = ti.title_id;
+ON t.title_id = ti.title_id
+INNER JOIN publishers p
+ON ti.pub_id = p.pub_id;
