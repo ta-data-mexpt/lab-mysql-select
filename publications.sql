@@ -346,7 +346,7 @@ UNLOCK TABLES;
 
 -- Dump completed on 2018-08-01 16:44:55
 
--- Challenge 1 -- 
+-- Query Challenge 1 -- 
 
 SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, ti.title as Title, p.pub_name as PUBLISHER
 FROM authors a
@@ -356,3 +356,26 @@ INNER JOIN titles ti
 ON t.title_id = ti.title_id
 INNER JOIN publishers p
 ON ti.pub_id = p.pub_id;
+
+-- Query Challenge 2 -- 
+
+SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, p.pub_name as PUBLISHER, COUNT(ti.title_id) as COUNT_TITLE
+FROM authors a
+INNER JOIN titleauthor t
+ON a.au_id = t.au_id
+INNER JOIN titles ti
+ON t.title_id = ti.title_id
+INNER JOIN publishers p
+ON ti.pub_id = p.pub_id
+GROUP BY ti.title_id, a.au_id, p.pub_name;
+
+-- Query Challenge 3 -- 
+
+SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, SUM(s.title_id)
+FROM authors a
+INNER JOIN titleauthor t
+ON a.au_id = t.au_id
+INNER JOIN titles ti
+ON t.title_id = ti.title_id
+RIGHT JOIN sales s
+ON s.title_id = 
