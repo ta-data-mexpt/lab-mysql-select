@@ -371,11 +371,27 @@ GROUP BY ti.title_id, a.au_id, p.pub_name;
 
 -- Query Challenge 3 -- 
 
-SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, SUM(s.title_id)
+SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, SUM(s.qty) as TOTAL_UNITS_SOLD
 FROM authors a
 INNER JOIN titleauthor t
 ON a.au_id = t.au_id
 INNER JOIN titles ti
 ON t.title_id = ti.title_id
-RIGHT JOIN sales s
-ON s.title_id = 
+LEFT JOIN sales s
+ON ti.title_id = s.title_id
+GROUP BY ti.title
+ORDER BY TOTAL_UNITS_SOLD DESC
+LIMIT 3;
+
+-- Query Challenge 4 -- 
+
+SELECT a.au_id as AUTHOR_ID, a.au_lname as LAST_NAME, a.au_fname AS FIRST_NAME, SUM(s.qty) as TOTAL_UNITS_SOLD
+FROM authors a
+INNER JOIN titleauthor t
+ON a.au_id = t.au_id
+INNER JOIN titles ti
+ON t.title_id = ti.title_id
+INNER JOIN sales s
+ON ti.title_id = s.title_id
+GROUP BY a.au_id, s.title_id
+ORDER BY TOTAL_UNITS_SOLD DESC;
