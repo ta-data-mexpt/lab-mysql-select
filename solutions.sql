@@ -76,7 +76,7 @@ select
 a.au_id as AUTHOR_ID
 , a.au_lname as LAST_NAME
 , a.au_fname as FIRST_NAME
-, sum(t2.royaltyper) + sum(r.royalty/100 * s.qty) as PROFIT
+, sum((tit.price * tit.royalty * s.qty + tit.advance) * t2.royaltyper/100) as PROFIT
 from
 authors a
 left join titleauthor t 
