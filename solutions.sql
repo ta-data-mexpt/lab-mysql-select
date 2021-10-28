@@ -83,7 +83,13 @@ left join titleauthor t
 on a.au_id = t.au_id 
 left join titles tit	
 on tit.title_id = t.title_id 
-left join sales s 
+left join (
+select
+title_id 
+, sum(qty) as qty
+from sales 
+group by title_id
+) s 
 on s.title_id  = tit.title_id 
 left join titleauthor t2 
 on t2.title_id = tit.title_id 
