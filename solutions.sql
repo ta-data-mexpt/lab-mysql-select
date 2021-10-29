@@ -76,7 +76,7 @@ select
 a.au_id as AUTHOR_ID
 , a.au_lname as LAST_NAME
 , a.au_fname as FIRST_NAME
-, sum((tit.price * tit.royalty * s.qty + tit.advance) * t2.royaltyper/100) as PROFIT
+, sum((tit.price * tit.royalty/100 * s.qty + tit.advance) * t.royaltyper/100) as PROFIT
 from
 authors a
 left join titleauthor t 
@@ -91,13 +91,9 @@ from sales
 group by title_id
 ) s 
 on s.title_id  = tit.title_id 
-left join titleauthor t2 
-on t2.title_id = tit.title_id 
-left join roysched r 
-on r.title_id = tit.title_id
 group BY
 a.au_id
 , a.au_lname
-, a.au_fname
+, a.au_fname 
 order by PROFIT desc
 Limit 3;
