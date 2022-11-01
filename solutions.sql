@@ -45,7 +45,7 @@ LIMIT 3;
 SELECT a.au_id AS 'AUTHOR ID', 
 a.au_lname AS 'LAST NAME', 
 a.au_fname AS 'FIRST NAME',
-SUM(s.qty) AS 'TOTAL'
+SUM(IFNULL(s.qty,0)) AS 'TOTAL'
 FROM authors a
 LEFT JOIN titleauthor ta
 ON  a.au_id = ta.au_id
