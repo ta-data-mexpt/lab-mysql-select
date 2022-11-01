@@ -42,19 +42,14 @@ ORDER BY TOTAL DESC
 LIMIT 3;
 
 ##Challenge 4 - Best Selling Authors Ranking
-UPDATE sales
-SET qty = 0
-WHERE qty IS NULL;
-
-##unsure how to solve challenge 4...
 SELECT a.au_id AS 'AUTHOR ID', 
 a.au_lname AS 'LAST NAME', 
 a.au_fname AS 'FIRST NAME',
-COALESCE(SUM(s.qty),0) AS 'TOTAL'
+SUM(s.qty) AS 'TOTAL'
 FROM authors a
-JOIN titleauthor ta
+LEFT JOIN titleauthor ta
 ON  a.au_id = ta.au_id
-JOIN sales s
+LEFT JOIN sales s
 ON s.title_id = ta.title_id
 GROUP BY a.au_id
 ORDER BY TOTAL DESC;
